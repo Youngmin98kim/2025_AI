@@ -1,16 +1,33 @@
 import numpy as np
-v = np.array([1,3.9,-9,2])
-print(v,v.ndim)
-#numpy의 기능? 내부 원소를 같은 type으로 만들도록 설계
 
 import pandas as pd
 
-df = pd.DataFrame ({"a":[4,5,6],"b":[7,8,9],"c":[10,11,12]}, index = [1,2,3]
- )
 
-print(df)
-#key : column 명칭
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
 
-#2차원 리스트를 사용하는 방법
-df = pd.DataFrame([[4,7,10],[5,8,11],[6,9,12]], index=[1,2,3],columns = ['a','b','c'])
-print(df)
+# ls = pd.read_csv("https://github.com/ageron/data/raw/main/lifesat/lifesat.csv")
+# print(ls)
+# print(type(ls)) #pandas dataframe 객체
+
+data_root = "https://github.com/ageron/data/raw/main/"
+lifesat = pd.read_csv(data_root+"lifesat/lifesat.csv")
+X = lifesat[["GDP per capita (USD)"]].values
+y = lifesat[["Life satisfaction"]].values
+
+lifesat.plot(kind = 'scatter', grid = True, x = "GDP per capita (USD)", y = "Life satisfaction")
+plt.axis([23_500,62_500,4,9])
+plt.show()
+
+# model = LinearRegression()
+# model.fit(X,y) #모델 훈련
+#
+# #키프로스에 대한 예측 생성
+# X_new = [[37655.2]]
+# print(model.predict(X_new))
+
+model = KNeighborsRegressor(n_neighbors=3)
+model.fit(X,y)
+X_new = [[37655.2]]
+print(model.predict(X_new))
