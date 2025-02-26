@@ -1,5 +1,6 @@
 import pandas as pd
 import seaborn as sns
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -21,7 +22,13 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
 
-# 🔹 8. 회귀 계수 출력
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+
+print(f"RMSE: {rmse:.2f}")
+print(f"R² Score: {r2:.2f}")
+
+# 회귀 계수 출력
 coefficients = pd.DataFrame({"Feature": X.columns, "Coefficient": model.coef_})
 print(coefficients.sort_values(by="Coefficient", ascending=False))
 
